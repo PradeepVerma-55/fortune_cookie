@@ -28,7 +28,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   String _currentFortune = "";
   final _fortuneList = [
     "You will have a great day!",
@@ -40,15 +39,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _randomizeFortune() {
     var random = Random();
-    int fortune = random.nextInt(_fortuneList.length);
+    int fortuneIndex = random.nextInt(_fortuneList.length);
    
     setState(() {
-      _currentFortune = _fortuneList[fortune];
-    });
-  }
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+      _currentFortune = _fortuneList[fortuneIndex];
     });
   }
 
