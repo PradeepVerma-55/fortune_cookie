@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({super.key});
-  
+  const MyHomePage({super.key});
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _randomizeFortune() {
     var random = Random();
     int fortuneIndex = random.nextInt(_fortuneList.length);
-   
+
     setState(() {
       _currentFortune = _fortuneList[fortuneIndex];
     });
@@ -58,7 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text("Your Fortune for today is:"),
-            Text(_currentFortune,
+            Text(
+              _currentFortune,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
