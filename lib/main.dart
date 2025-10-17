@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Print uncaught Flutter errors to console (helpful when emulator hangs on launch)
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    // Also print to stdout so `flutter run` / IDE logs show it clearly
+    print('FlutterError: ${details.exceptionAsString()}');
+  };
+
   runApp(const MyApp());
 }
 
@@ -15,7 +24,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: MyHomePage(),
+      // Make MyHomePage const to avoid unnecessary rebuilds
+      home: const MyHomePage(),
     );
   }
 }
@@ -28,7 +38,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _currentFortune = "";
+  // Provide an initial instruction string so the card isn't empty
+  String _currentFortune = "Tap \"Get Fortune\" to reveal your fortune.";
   final _fortuneList = [
     "You will have a great day!",
     "Success is on the horizon.",
@@ -57,6 +68,21 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Image.asset(
+              "assets/images/fortune-cookie.png",
+              width: 200,
+              height: 200,
+              // If the asset is missing or fails to load, show a placeholder and print the error
+              errorBuilder: (context, error, stackTrace) {
+                print('Image load error: $error');
+                return const SizedBox(
+                  width: 200,
+                  height: 200,
+                  child: Center(child: Icon(Icons.broken_image, size: 80)),
+                );
+              },
+            ),
+            SizedBox(height: 20),
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -73,11 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _randomizeFortune,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
