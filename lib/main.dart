@@ -57,19 +57,27 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Your Fortune for today is:"),
-            Text(
-              _currentFortune,
-              style: Theme.of(context).textTheme.headlineMedium,
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  _currentFortune,
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: _randomizeFortune,
+              child: Text("Get Fortune"),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _randomizeFortune,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _randomizeFortune,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
